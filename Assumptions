@@ -1,0 +1,5 @@
+1.Written Standalone the logics for mentioned Scenarios
+2.Assumed the database to be MySQL
+3.Assumed the date input format will be  "yyyy-MM-dd" format
+4.Created a method to list the scheduled email details for all the Customer Products present in the table at the time of run
+5.Handled the SQL exception using generic SQL Exception class
