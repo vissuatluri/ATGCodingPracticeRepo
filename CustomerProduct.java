@@ -23,14 +23,12 @@ public class CustomerProduct {
 		this.startDate = startDate;
 	}
 
-
 	public CustomerProduct(String customerId, String productName, String domain) {
 		super();
 		this.customerId = customerId;
 		this.productName = productName;
 		this.domain = domain;
 	}
-
 
 	public String getCustomerId() {
 		return customerId;
@@ -58,31 +56,21 @@ public class CustomerProduct {
 		this.durationMonths = durationMonths;
 	}
 
-
-
 	public Date getStartDate() {
 		return startDate;
 	}
-
-
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-
-
 	public Date getEmailDate() {
 		return emailDate;
 	}
 
-
-
 	public void setEmailDate(Date emailDate) {
 		this.emailDate = emailDate;
 	}
-			
-
 
 	@Override
 	public String toString() {

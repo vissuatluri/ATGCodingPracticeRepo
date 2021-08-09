@@ -15,6 +15,11 @@ import com.java.dto.Product;
 
 public class CustomerProductDAO {
 	
+	/**
+	    * Method to insert the Product Info
+	    *
+	    * @param CustomerProduct
+	    */
 	public void addProduct(Product p)
 	{
 		String sql = "INSERT INTO Product (productName) VALUES (?)";
@@ -29,11 +34,14 @@ public class CustomerProductDAO {
 		}catch(SQLException ex) {
 			con.close();
 			System.out.println("Exception occured while adding Product. Kindly verify the details"+ex.getMessage());
-		}
-		
-		
-
+		}	
 	}
+	
+	/**
+	    * Method to insert the CustomerProduct Info
+	    *
+	    * @param CustomerProduct
+	    */
 	public void addCustomerProduct(CustomerProduct cp)
 	{
 		String sql = "INSERT INTO CustomerProduct (customerId, productName, domain, durationMonths,startDate) VALUES (?, ?, ?, ?,?)";
@@ -51,10 +59,14 @@ public class CustomerProductDAO {
 		}}catch(SQLException ex) {
 			con.close();
 			System.out.println("Exception occured while adding CustomerProduct. Kindly verify the details"+ex.getMessage());
-		}
-		
+		}		
 	}
 	
+	/**
+	    * Method to delete the Customer Product Info
+	    *
+	    * @param CustomerProduct
+	    */
 	public void deleteCustomerProduct(CustomerProduct cp)
 	{
 		String sql = "DELETE FROM CustomerProduct WHERE customerId=? and productName = ? and domain = ?";
@@ -76,6 +88,11 @@ public class CustomerProductDAO {
 		}
 	}
 	
+	/**
+	    * Method to return the scheduled email details(sorted by date)
+	    *
+	    * @return returns a list of scheduled email details of all Customer Products(sorted by date)
+	    */
 	public List<CustomerProduct> getEmailScheduleDetails()
 	{
 		String sql = "SELECT * FROM CustomerProduct";
@@ -84,9 +101,7 @@ public class CustomerProductDAO {
 		 
 		Statement statement = conn.createStatement();
 		ResultSet result = statement.executeQuery(sql);
-		 
-		int count = 0;
-		 
+		 		 
 		while (result.next())
 		{
 			String custId = result.getString(1);
@@ -96,8 +111,7 @@ public class CustomerProductDAO {
 			Date startDate = result.getDate(5);
 			emailDetails = getEmailSchedule(custId,productName,domain,duration,startDate);
 			for( Date emailDate: emailDetails)
-			{
-				
+			{				
 				  CustomerProduct cp = new CustomerProduct();
 				  cp.setCustomerId(custId); 
 				  cp.setProductName(productName);
@@ -108,17 +122,18 @@ public class CustomerProductDAO {
 		}
 		emailDetailsList.sort(Comparator.comparing(CustomerProduct::getEmailDate));
 		return emailDetailsList;
-	}
-	
-	
+	}	
 
-	
+	/**
+	    * Method to find the email scheduled for each Customer Product(sorted by date)
+	    *
+	    * @return returns a list of dates to schedule a mail for each Customer Product
+	    */
 	public List<Date> getEmailSchedule(String custId,String productName,String domain,int durationMonths,Date startDate)
 	{
 		List<Date> emailDetails = new ArrayList<Date>();
 		 if(productName.equalsIgnoreCase("Domain"))
 			{
-				//c.add(Calendar.DATE, -2);
 				emailDetails.add(getEmailDate(startDate, durationMonths, -2,true));
 			}
 		 else if(productName.equalsIgnoreCase("Hosting"))
@@ -145,6 +160,11 @@ public class CustomerProductDAO {
 		return c.getTime();
 	}
 	
+	/**
+	    * Method to create a connection to Database
+	    *
+	    * @return returns database Connection
+	    */
 	private Connection getDBConnection()
 	{		
 	  Connection con = null;
@@ -163,7 +183,6 @@ public class CustomerProductDAO {
 	      ex.printStackTrace();
 	     
 }
-	  return con;
-		
+	  return con;		
 	
 }
